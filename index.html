@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>铁血星域：帝国黎明 | Ironvoid: Dawn of the Imperium</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- 主菜单 -->
+    <div id="screen-menu" class="screen active">
+        <div class="menu-container">
+            <div class="title-art">
+    <pre class="title-ascii">
+    ╔══════════════════════════════════════════════════════╗
+    ║  ⚙️  铁 血 星 域  ⚙️                                ║
+    ║      IRONVOID: DAWN OF THE IMPERIUM                 ║
+    ╠══════════════════════════════════════════════════════╣
+    ║         ░▒▓ 帝 国 黎 明 ▓▒░                         ║
+    ╚══════════════════════════════════════════════════════╝
+    </pre>
+            </div>
+            <div class="menu-quote">
+                "在锈蚀的星空下，齿轮与信仰驱动着人类最后的征途。"
+            </div>
+            <div class="menu-buttons">
+                <button id="btn-new-game" class="menu-btn">⚙ 新的征途</button>
+                <button id="btn-load-game" class="menu-btn">📜 载入存档</button>
+                <button id="btn-codex" class="menu-btn">📖 帝国典籍</button>
+                <button id="btn-settings" class="menu-btn">🔧 机械设定</button>
+            </div>
+            <div class="menu-footer">
+                <span>Version 0.1.0 · 第三纪元 · 以太裂隙历 41,000年</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 角色创建 -->
+    <div id="screen-creation" class="screen">
+        <div class="creation-container">
+            <h1 class="gothic-title">⚙ 锻造你的总督 ⚙</h1>
+            <div class="creation-form">
+                <div class="form-group">
+                    <label>总督名号</label>
+                    <input type="text" id="governor-name" value="Aurelius Vex" maxlength="30">
+                </div>
+                <div class="form-group">
+                    <label>殖民星名称</label>
+                    <input type="text" id="colony-name" value="铁砧座-VII" maxlength="30">
+                </div>
+                <div class="form-group">
+                    <label>起源背景</label>
+                    <div class="origin-cards" id="origin-cards"></div>
+                </div>
+                <div class="form-group">
+                    <label>星球类型</label>
+                    <div class="planet-cards" id="planet-cards"></div>
+                </div>
+                <div id="creation-summary" class="creation-summary"></div>
+                <button id="btn-start-game" class="menu-btn primary-btn">⚔ 开启征途</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 主游戏界面 -->
+    <div id="screen-game" class="screen">
+        <!-- 顶部资源栏 -->
+        <div id="top-bar" class="top-bar">
+            <div class="resource-group" id="resource-bar"></div>
+            <div class="top-bar-right">
+                <span id="turn-display" class="turn-display">回合 1</span>
+                <span id="date-display" class="date-display">41,000.001</span>
+                <button id="btn-next-turn" class="btn-turn">⚙ 推进齿轮 ⚙</button>
+            </div>
+        </div>
+
+        <!-- 主内容区 -->
+        <div class="game-layout">
+            <!-- 左侧导航 -->
+            <nav class="side-nav" id="side-nav">
+                <button class="nav-btn active" data-panel="colony">🏗️ 殖民地</button>
+                <button class="nav-btn" data-panel="production">⚙️ 工业</button>
+                <button class="nav-btn" data-panel="research">🔬 科技</button>
+                <button class="nav-btn" data-panel="military">⚔️ 军事</button>
+                <button class="nav-btn" data-panel="trade">💰 贸易</button>
+                <button class="nav-btn" data-panel="population">👥 人口</button>
+                <button class="nav-btn" data-panel="diplomacy">🌐 外交</button>
+                <button class="nav-btn" data-panel="galaxy">🗺️ 星图</button>
+                <div class="nav-divider"></div>
+                <button class="nav-btn" data-panel="codex">📖 典籍</button>
+                <button class="nav-btn" id="btn-save">💾 存档</button>
+                <button class="nav-btn" id="btn-menu">🚪 菜单</button>
+            </nav>
+
+            <!-- 中央面板 -->
+            <main class="main-panel" id="main-panel">
+                <!-- 动态内容 -->
+            </main>
+
+            <!-- 右侧信息栏 -->
+            <aside class="info-panel" id="info-panel">
+                <div class="info-header">📋 总督简报</div>
+                <div id="info-content" class="info-content"></div>
+            </aside>
+        </div>
+
+        <!-- 底部日志 -->
+        <div class="log-bar" id="log-bar">
+            <div class="log-header" id="log-toggle">📜 帝国纪事 <span id="log-count">(0)</span></div>
+            <div class="log-content" id="log-content"></div>
+        </div>
+    </div>
+
+    <!-- 事件弹窗 -->
+    <div id="event-modal" class="modal-overlay">
+        <div class="modal-content event-modal">
+            <div class="event-header" id="event-header"></div>
+            <div class="event-body" id="event-body"></div>
+            <div class="event-choices" id="event-choices"></div>
+        </div>
+    </div>
+
+    <!-- 确认弹窗 -->
+    <div id="confirm-modal" class="modal-overlay">
+        <div class="modal-content confirm-modal">
+            <div id="confirm-text"></div>
+            <div class="modal-buttons">
+                <button id="confirm-yes" class="menu-btn">确认</button>
+                <button id="confirm-no" class="menu-btn">取消</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 帝国典籍 -->
+    <div id="screen-codex" class="screen">
+        <div class="codex-container">
+            <h1 class="gothic-title">📖 帝国典籍</h1>
+            <div id="codex-content" class="codex-content"></div>
+            <button id="btn-codex-back" class="menu-btn">返回</button>
+        </div>
+    </div>
+
+    <script src="js/config.js"></script>
+    <script src="js/game-engine.js"></script>
+    <script src="js/colony.js"></script>
+    <script src="js/production.js"></script>
+    <script src="js/research.js"></script>
+    <script src="js/military.js"></script>
+    <script src="js/trade.js"></script>
+    <script src="js/population.js"></script>
+    <script src="js/diplomacy.js"></script>
+    <script src="js/events.js"></script>
+    <script src="js/galaxy.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/save.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
